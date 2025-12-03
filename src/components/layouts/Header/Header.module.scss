@@ -1,0 +1,12 @@
+@use '@/assets/styles/abstracts' as *;
+
+header {
+  color: red;
+
+  @include breakpoint(md) {
+    color: blue;
+  }
+  @include breakpoint(lg) {
+    color: yellow;
+  }
+}
