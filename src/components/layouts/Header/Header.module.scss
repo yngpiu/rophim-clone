@@ -2,26 +2,40 @@
 
 .header {
   display: flex;
+  position: relative;
   justify-content: space-between;
-  padding: 12px 6px;
   background-color: var(--bg-color);
+  padding: 12px 6px;
+
+  @include breakpoint(xl) {
+    padding: 16px 20px;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .menu-toggle {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
-  padding: 0;
+  cursor: pointer;
   border: none;
   background: transparent;
-  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+
+  @include breakpoint(xl) {
+    display: none;
+  }
 }
 
 .hamburger {
-  position: relative;
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: space-between;
   width: 20px;
@@ -29,13 +43,13 @@
 
   &__line {
     display: block;
-    width: 100%;
-    height: 2px;
-    background-color: white;
     transition:
       transform 0.3s ease,
       opacity 0.3s ease,
       background-color 0.3s ease;
+    background-color: white;
+    width: 100%;
+    height: 2px;
   }
 
   &--active &__line {
@@ -51,6 +65,23 @@
 
     &:nth-child(3) {
       transform: translateY(-6px) rotate(-45deg);
+    }
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
+  @include breakpoint(xl) {
+    margin-left: 0;
+  }
+
+  &__image {
+    height: 36px;
+
+    @include breakpoint(xl) {
+      height: 40px;
     }
   }
 }

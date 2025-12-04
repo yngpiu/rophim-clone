@@ -1,0 +1,48 @@
+.navigation {
+  position: absolute;
+  top: 68px;
+  left: 6px;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  background-color: #3b4987;
+  padding: 16px;
+  width: calc(100% - 12px);
+  max-width: 328px;
+  color: white;
+
+  &__login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    border-radius: 20px;
+    background-color: #fff;
+    padding: 8px 10px;
+    color: black;
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: none;
+    text-wrap: nowrap;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 16px;
+    margin-top: 12px;
+  }
+
+  &__link {
+    color: white;
+    font-weight: 500;
+    font-size: 13px;
+    text-wrap: nowrap;
+  }
+
+  &--opened {
+    visibility: visible;
+    opacity: 1;
+  }
+}

@@ -1,4 +1,4 @@
-const SvgComponent = (props: React.SVGProps<SVGSVGElement>): React.ReactNode => (
+const Logo = (props: React.SVGProps<SVGSVGElement>): React.ReactNode => (
   <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" viewBox="0 0 168 50" {...props}>
     <defs>
       <clipPath id="clippath">
@@ -63,4 +63,4 @@ const SvgComponent = (props: React.SVGProps<SVGSVGElement>): React.ReactNode => 
     </g>
   </svg>
 );
-export default SvgComponent;
+export default Logo;
