@@ -39,10 +39,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 6px;
     transition: all 0.3s ease;
-    border-radius: 12px;
+    border-radius: 24px;
     background-color: #fff;
-    padding: 8px 10px;
+    padding: 8px 16px;
     height: 40px;
     color: black;
     font-weight: 500;
