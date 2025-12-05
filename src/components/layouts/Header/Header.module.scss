@@ -15,7 +15,8 @@
   width: 100%;
   color: var(--layout-foreground);
   @include breakpoint(md) {
-    background-color: transparent;
+    background: #191b24;
+    background: linear-gradient(180deg, rgba(25, 27, 36, 0.68) 0%, rgba(25, 27, 36, 0) 100%);
   }
   &--fixed {
     background-color: var(--layout-background);
