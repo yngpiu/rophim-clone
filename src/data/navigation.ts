@@ -113,7 +113,7 @@ export const categoryList = [
   },
   {
     id: '5',
-    name: 'Quốc Gia',
+    name: 'Quốc gia',
     subcategories: [
       {
         id: 'GB',
