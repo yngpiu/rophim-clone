@@ -2,7 +2,7 @@ import { faCaretDown, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { categoryList } from '@/data/navigation';
 import { useMenuContext } from '@/hooks/useMenuContext';
@@ -16,9 +16,11 @@ type NavigationProps = {
 };
 
 const Navigation = ({ searchModalIsOpen }: NavigationProps) => {
-  const { menuIsOpen, activeCategory, setActiveCategory } = useMenuContext();
+  const { menuIsOpen, activeCategory, setActiveCategory, setMenuIsOpen } = useMenuContext();
   const navRef = useRef<HTMLElement>(null);
   const activeDropdownRef = useRef<Element | null>(null);
+  const location = useLocation();
+  const prevPathnameRef = useRef<string>(location.pathname);
 
   const handleClick = useCallback(
     (categoryId: string) => {
@@ -27,6 +29,15 @@ const Navigation = ({ searchModalIsOpen }: NavigationProps) => {
     [setActiveCategory]
   );
 
+  // Đóng menu và dropdown khi route thay đổi (chỉ khi pathname thực sự thay đổi)
+  useEffect(() => {
+    if (prevPathnameRef.current !== location.pathname) {
+      setActiveCategory('');
+      setMenuIsOpen(false);
+      prevPathnameRef.current = location.pathname;
+    }
+  }, [location.pathname, setActiveCategory, setMenuIsOpen]);
+
   // Cache dropdown selector
   const dropdownSelector = useMemo(
     () => `.${styles['nav__dropdown']}.${styles['nav__dropdown--active']}`,
@@ -34,6 +45,7 @@ const Navigation = ({ searchModalIsOpen }: NavigationProps) => {
   );
   const itemSelector = useMemo(() => `.${styles['nav__item']}`, []);
 
+  // Đóng dropdown khi click ra ngoài
   useEffect(() => {
     if (!activeCategory || !navRef.current) {
       activeDropdownRef.current = null;
@@ -74,6 +86,35 @@ const Navigation = ({ searchModalIsOpen }: NavigationProps) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [activeCategory, setActiveCategory, dropdownSelector, itemSelector]);
+
+  // Đóng menu khi click ra ngoài nav (chỉ ở mobile)
+  useEffect(() => {
+    if (!menuIsOpen || !navRef.current) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      const navElement = navRef.current;
+
+      if (!navElement) return;
+
+      // Kiểm tra click có nằm trong nav hoặc menu toggle button không
+      const isClickInNav = navElement.contains(target);
+      const isClickInMenuToggle = (target as Element).closest(
+        '[aria-label="Toggle navigation menu"]'
+      );
+
+      // Nếu click ngoài nav và không phải menu toggle button, đóng menu
+      if (!isClickInNav && !isClickInMenuToggle) {
+        setMenuIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuIsOpen, setMenuIsOpen]);
 
   return (
     <nav
