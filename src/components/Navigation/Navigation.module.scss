@@ -1,10 +1,10 @@
-.navigation {
+@use '@/assets/styles/abstracts' as *;
+
+.nav {
+  display: none;
   position: absolute;
   top: 68px;
   left: 6px;
-  visibility: hidden;
-  opacity: 0;
-  transition: all 0.3s ease;
   border-radius: 12px;
   background-color: #3b4987;
   padding: 16px;
@@ -12,12 +12,16 @@
   max-width: 328px;
   color: white;
 
+  &--opened {
+    display: block;
+  }
+
   &__login {
     display: flex;
     justify-content: center;
     align-items: center;
     transition: all 0.3s ease;
-    border-radius: 20px;
+    border-radius: 12px;
     background-color: #fff;
     padding: 8px 10px;
     color: black;
@@ -30,19 +34,76 @@
   &__list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    row-gap: 16px;
     margin-top: 12px;
   }
 
+  &__item {
+    position: relative;
+  }
+
   &__link {
+    display: block;
+    cursor: pointer;
+    padding: 8px 0;
     color: white;
     font-weight: 500;
     font-size: 13px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     text-wrap: nowrap;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  &--opened {
-    visibility: visible;
-    opacity: 1;
+  &__dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 10;
+    border-radius: 8px;
+    background-color: color-opacity(#000, 0.9);
+    padding: 12px;
+
+    &--active {
+      display: block;
+    }
+
+    &--single-column {
+      .nav__sublist {
+        grid-template-columns: repeat(1, 1fr);
+        width: 100px;
+      }
+    }
+  }
+
+  &__sublist {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+
+    @media screen and (max-width: 300px) {
+      grid-template-columns: repeat(1, 1fr);
+      width: 165px;
+    }
+
+    @include breakpoint(sm) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__sublink {
+    display: block;
+    border-radius: 6px;
+    padding: 6px;
+    font-weight: 500;
+    font-size: 13px;
+    text-wrap: nowrap;
+
+    &:hover {
+      background-color: color-opacity(#fff, 0.05);
+      color: var(--primary-text);
+    }
   }
 }
