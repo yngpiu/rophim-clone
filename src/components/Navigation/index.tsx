@@ -1,28 +1,26 @@
 import { faCaretDown, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { categoryList } from '@/data/navigation';
+import { useMenuContext } from '@/hooks/useMenuContext';
 
 import styles from './Navigation.module.scss';
 
 const cx = classNames.bind(styles);
 
 type NavigationProps = {
-  menuIsOpen: boolean;
   searchModalIsOpen: boolean;
 };
 
-const Navigation = ({ menuIsOpen, searchModalIsOpen }: NavigationProps) => {
-  const [activeCategory, setActiveCategory] = useState<string>('');
+const Navigation = ({ searchModalIsOpen }: NavigationProps) => {
+  const { menuIsOpen, activeCategory, setActiveCategory } = useMenuContext();
+
+  const visibleCategory = menuIsOpen ? activeCategory : '';
 
   const handleClick = (categoryId: string) => {
-    setActiveCategory(prev => {
-      if (prev === categoryId) return '';
-      return categoryId;
-    });
+    setActiveCategory(activeCategory === categoryId ? '' : categoryId);
   };
 
   return (
@@ -51,7 +49,7 @@ const Navigation = ({ menuIsOpen, searchModalIsOpen }: NavigationProps) => {
             {category?.subcategories && category.subcategories.length > 0 && (
               <div
                 className={cx('nav__dropdown', {
-                  'nav__dropdown--active': activeCategory === category?.id,
+                  'nav__dropdown--active': visibleCategory === category?.id,
                   'nav__dropdown--single-column': category.id === '5',
                 })}
               >

@@ -13,7 +13,7 @@ import styles from './Header.module.scss';
 const cx = classNames.bind(styles);
 
 const Header = () => {
-  const { menuIsOpen, toggleMenu } = useMenuContext();
+  const { menuIsOpen, setMenuIsOpen, toggleMenu } = useMenuContext();
   const { searchModalIsOpen, toggleSearchModal } = useSearchModalContext();
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -25,13 +25,19 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (searchModalIsOpen) {
+      setMenuIsOpen(false);
+    }
+  }, [searchModalIsOpen, setMenuIsOpen]);
+
   return (
     <header className={cx('header', { 'header--fixed': isScrolled })}>
       <div className={cx('header__left', { 'header__left--hidden': searchModalIsOpen })}>
         <MenuToggle isOpen={menuIsOpen} onToggle={toggleMenu} />
         <LogoLink />
       </div>
-      <Navigation menuIsOpen={menuIsOpen} searchModalIsOpen={searchModalIsOpen} />
+      <Navigation searchModalIsOpen={searchModalIsOpen} />
       <SearchBar isOpen={searchModalIsOpen} isFixed={isScrolled} onToggle={toggleSearchModal} />
     </header>
   );
