@@ -5,6 +5,10 @@
   align-items: center;
   margin-left: auto;
 
+  @include breakpoint(xl) {
+    margin-left: 32px;
+  }
+
   &__button {
     display: flex;
     justify-content: center;
@@ -42,18 +46,28 @@
     height: 40px;
 
     @include breakpoint(xl) {
-      display: block;
+      display: flex;
       position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
       border: none;
       width: 300px;
     }
 
     &--fixed {
       background-color: color-opacity(white, 0.04);
+      @include breakpoint(xl) {
+        background-color: transparent;
+      }
     }
 
     &--active {
       display: block;
+
+      @include breakpoint(xl) {
+        display: flex;
+      }
     }
 
     &-icon {

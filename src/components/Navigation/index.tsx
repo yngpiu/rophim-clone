@@ -17,7 +17,7 @@ type NavigationProps = {
 const Navigation = ({ searchModalIsOpen }: NavigationProps) => {
   const { menuIsOpen, activeCategory, setActiveCategory } = useMenuContext();
 
-  const visibleCategory = menuIsOpen ? activeCategory : '';
+  const visibleCategory = activeCategory;
 
   const handleClick = (categoryId: string) => {
     setActiveCategory(activeCategory === categoryId ? '' : categoryId);

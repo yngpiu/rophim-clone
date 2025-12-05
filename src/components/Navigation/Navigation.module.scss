@@ -15,6 +15,17 @@
     display: block;
   }
 
+  @include breakpoint(xl) {
+    display: flex;
+    position: static;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 24px;
+    margin-left: auto;
+    background-color: transparent;
+    padding: 0;
+  }
+
   &--hidden {
     display: none;
   }
@@ -27,6 +38,7 @@
     border-radius: 12px;
     background-color: #fff;
     padding: 8px 10px;
+    height: 40px;
     color: black;
     font-weight: 500;
     font-size: 14px;
@@ -38,6 +50,12 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     margin-top: 12px;
+
+    @include breakpoint(xl) {
+      display: flex;
+      align-items: center;
+      margin-top: 0;
+    }
   }
 
   &__item {
@@ -57,12 +75,16 @@
     -ms-user-select: none;
     text-wrap: nowrap;
     -webkit-tap-highlight-color: transparent;
+
+    @include breakpoint(xl) {
+      padding: 12px 12px;
+    }
   }
 
   &__dropdown {
     display: none;
     position: absolute;
-    top: calc(100% + 8px);
+    top: 100%;
     left: 0;
     z-index: 10;
     border-radius: 8px;
