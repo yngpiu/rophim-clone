@@ -19,7 +19,6 @@ const Navigation = ({ menuIsOpen, searchModalIsOpen }: NavigationProps) => {
   const [activeCategory, setActiveCategory] = useState<string>('');
 
   const handleClick = (categoryId: string) => {
-    console.log(categoryId, activeCategory);
     setActiveCategory(prev => {
       if (prev === categoryId) return '';
       return categoryId;

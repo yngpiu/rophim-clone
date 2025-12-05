@@ -1,0 +1,19 @@
+@use '@/assets/styles/abstracts' as *;
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
+
+  @include breakpoint(xl) {
+    margin-left: 0;
+  }
+
+  &__image {
+    height: 36px;
+
+    @include breakpoint(xl) {
+      height: 40px;
+    }
+  }
+}
