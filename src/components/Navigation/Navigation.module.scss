@@ -11,9 +11,12 @@
   width: calc(100% - 12px);
   max-width: 328px;
   color: white;
-
   &--opened {
     display: block;
+  }
+
+  &--hidden {
+    display: none;
   }
 
   &__login {

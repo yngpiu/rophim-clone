@@ -12,9 +12,10 @@ const cx = classNames.bind(styles);
 
 type NavigationProps = {
   menuIsOpen: boolean;
+  searchModalIsOpen: boolean;
 };
 
-const Navigation = ({ menuIsOpen }: NavigationProps) => {
+const Navigation = ({ menuIsOpen, searchModalIsOpen }: NavigationProps) => {
   const [activeCategory, setActiveCategory] = useState<string>('');
 
   const handleClick = (categoryId: string) => {
@@ -26,7 +27,7 @@ const Navigation = ({ menuIsOpen }: NavigationProps) => {
   };
 
   return (
-    <nav className={cx('nav', { 'nav--opened': menuIsOpen })}>
+    <nav className={cx('nav', { 'nav--opened': menuIsOpen }, { 'nav--hidden': searchModalIsOpen })}>
       <Link to={{ pathname: 'login' }} className={cx('nav__login')}>
         <FontAwesomeIcon icon={faUser} />
         Thành viên
