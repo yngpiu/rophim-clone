@@ -1,6 +1,7 @@
 import { faMagnifyingGlass, faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Navigation from '@/components/Navigation';
@@ -15,8 +16,18 @@ const cx = classNames.bind(styles);
 const Header = () => {
   const { menuIsOpen, toggleMenu } = useMenuContext();
   const { searchModalIsOpen, toggleSearchModal } = useSearchModalContext();
+  const [isScrolled, setIsScrolled] = useState(false);
+  console.log(isScrolled);
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header className={cx('header')}>
+    <header className={cx('header', { 'header--fixed': isScrolled })}>
       <div className={cx('header__left', { 'header__left--hidden': searchModalIsOpen })}>
         <div style={{ position: 'relative' }}>
           <button
