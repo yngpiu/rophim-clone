@@ -73,7 +73,6 @@
     &--single-column {
       .nav__sublist {
         grid-template-columns: repeat(1, 1fr);
-        width: 100px;
       }
     }
   }
@@ -82,11 +81,6 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
-
-    @media screen and (max-width: 300px) {
-      grid-template-columns: repeat(1, 1fr);
-      width: 165px;
-    }
 
     @include breakpoint(sm) {
       grid-template-columns: repeat(3, 1fr);
@@ -97,9 +91,11 @@
     display: block;
     border-radius: 6px;
     padding: 6px;
+    max-width: 120px;
     font-weight: 500;
     font-size: 13px;
     text-wrap: nowrap;
+    @include truncate(1);
 
     &:hover {
       background-color: color-opacity(#fff, 0.05);

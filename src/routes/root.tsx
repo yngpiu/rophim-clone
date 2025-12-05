@@ -1,7 +1,9 @@
+import { createBrowserRouter } from 'react-router-dom';
+
 import RootLayout from '@/components/layouts';
+import GenrePage from '@/pages/GenrePage';
 import HomePage from '@/pages/HomePage';
 import TopicPage from '@/pages/TopicPage';
-import { createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
   {
@@ -12,6 +14,10 @@ const router = createBrowserRouter([
       {
         path: '/chu-de',
         element: <TopicPage />,
+      },
+      {
+        path: '/the-loai/:slug',
+        element: <GenrePage />,
       },
     ],
   },

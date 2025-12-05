@@ -58,7 +58,10 @@ const Navigation = ({ menuIsOpen }: NavigationProps) => {
                 <ul className={cx('nav__sublist')}>
                   {category.subcategories.map(subcategory => (
                     <li key={subcategory.id} className={cx('nav__subitem')}>
-                      <Link to={{ pathname: subcategory.slug }} className={cx('nav__sublink')}>
+                      <Link
+                        to={{ pathname: `/the-loai/${subcategory.slug}` }}
+                        className={cx('nav__sublink')}
+                      >
                         {subcategory.name}
                       </Link>
                     </li>
