@@ -22,7 +22,8 @@ const Navigation = ({ searchModalIsOpen }: NavigationProps) => {
   const prevPathnameRef = useRef<string>(location.pathname);
 
   const handleClick = useCallback(
-    (categoryId: string) => {
+    (categoryId: string, event: React.MouseEvent) => {
+      event.stopPropagation();
       setActiveCategory(prev => (prev === categoryId ? '' : categoryId));
     },
     [setActiveCategory]
@@ -51,15 +52,27 @@ const Navigation = ({ searchModalIsOpen }: NavigationProps) => {
 
       // Kiểm tra click có nằm trong nav không
       if (navElement.contains(target)) {
-        // Nếu có dropdown mở và click trong dropdown, không làm gì
-        if (activeCategory) {
-          const activeDropdown = navElement.querySelector(
-            `.${styles['nav__dropdown']}.${styles['nav__dropdown--active']}`
-          );
-          if (activeDropdown?.contains(target)) {
+        // Kiểm tra click có nằm trong nav item không
+        const clickedItem = targetElement.closest(`.${styles['nav__item']}`);
+
+        if (activeCategory && clickedItem) {
+          // Lấy categoryId từ data attribute hoặc từ dropdown
+          const itemDropdown = clickedItem.querySelector(`.${styles['nav__dropdown']}`);
+          const isActiveItem = itemDropdown?.classList.contains(styles['nav__dropdown--active']);
+
+          // Nếu click vào item có dropdown đang mở, để handleClick xử lý toggle
+          if (isActiveItem) {
             return;
           }
-          // Click trong nav nhưng ngoài dropdown, đóng dropdown
+
+          // Nếu click trong dropdown của item khác, đóng dropdown hiện tại
+          if (itemDropdown?.contains(target)) {
+            return;
+          }
+        }
+
+        // Click trong nav nhưng không phải item có dropdown đang mở, đóng dropdown
+        if (activeCategory) {
           setActiveCategory('');
         }
         return;
@@ -97,7 +110,7 @@ const Navigation = ({ searchModalIsOpen }: NavigationProps) => {
           <li
             key={category.id}
             className={cx('nav__item')}
-            onClick={() => handleClick(category?.id ?? '')}
+            onClick={e => handleClick(category?.id ?? '', e)}
           >
             {category?.subcategories && category.subcategories.length > 0 ? (
               <span className={cx('nav__link')}>
