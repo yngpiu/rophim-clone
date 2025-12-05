@@ -1,7 +1,7 @@
 import { faCaretDown, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { categoryList } from '@/data/navigation';
@@ -18,7 +18,6 @@ type NavigationProps = {
 const Navigation = ({ searchModalIsOpen }: NavigationProps) => {
   const { menuIsOpen, activeCategory, setActiveCategory, setMenuIsOpen } = useMenuContext();
   const navRef = useRef<HTMLElement>(null);
-  const activeDropdownRef = useRef<Element | null>(null);
   const location = useLocation();
   const prevPathnameRef = useRef<string>(location.pathname);
 
@@ -38,46 +37,42 @@ const Navigation = ({ searchModalIsOpen }: NavigationProps) => {
     }
   }, [location.pathname, setActiveCategory, setMenuIsOpen]);
 
-  // Cache dropdown selector
-  const dropdownSelector = useMemo(
-    () => `.${styles['nav__dropdown']}.${styles['nav__dropdown--active']}`,
-    []
-  );
-  const itemSelector = useMemo(() => `.${styles['nav__item']}`, []);
-
-  // Đóng dropdown khi click ra ngoài
+  // Gộp logic click outside cho cả menu và dropdown
   useEffect(() => {
-    if (!activeCategory || !navRef.current) {
-      activeDropdownRef.current = null;
-      return;
-    }
+    const navElement = navRef.current;
+    if (!navElement) return;
 
-    // Cache dropdown element khi activeCategory thay đổi
-    activeDropdownRef.current = navRef.current.querySelector(dropdownSelector);
+    // Chỉ lắng nghe khi có menu mở hoặc dropdown mở
+    if (!menuIsOpen && !activeCategory) return;
 
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
-      const navElement = navRef.current;
-
-      if (!navElement) return;
+      const targetElement = target as Element;
 
       // Kiểm tra click có nằm trong nav không
       if (navElement.contains(target)) {
-        const activeDropdown = activeDropdownRef.current;
-        const clickedItem = (target as Element).closest(itemSelector);
-
-        // Nếu click trong dropdown hoặc item có dropdown đang mở, không đóng
-        if (activeDropdown?.contains(target) || clickedItem?.contains(activeDropdown)) {
-          return;
+        // Nếu có dropdown mở và click trong dropdown, không làm gì
+        if (activeCategory) {
+          const activeDropdown = navElement.querySelector(
+            `.${styles['nav__dropdown']}.${styles['nav__dropdown--active']}`
+          );
+          if (activeDropdown?.contains(target)) {
+            return;
+          }
+          // Click trong nav nhưng ngoài dropdown, đóng dropdown
+          setActiveCategory('');
         }
-
-        // Nếu click trong nav nhưng ngoài dropdown, đóng dropdown
-        setActiveCategory('');
         return;
       }
 
-      // Click ngoài nav, đóng dropdown
-      setActiveCategory('');
+      // Click ngoài nav
+      // Kiểm tra có phải menu toggle button không
+      const isMenuToggle = targetElement.closest('[aria-label="Toggle navigation menu"]');
+      if (isMenuToggle) return;
+
+      // Đóng cả menu và dropdown
+      if (menuIsOpen) setMenuIsOpen(false);
+      if (activeCategory) setActiveCategory('');
     };
 
     document.addEventListener('mousedown', handleClickOutside);
@@ -85,36 +80,7 @@ const Navigation = ({ searchModalIsOpen }: NavigationProps) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [activeCategory, setActiveCategory, dropdownSelector, itemSelector]);
-
-  // Đóng menu khi click ra ngoài nav (chỉ ở mobile)
-  useEffect(() => {
-    if (!menuIsOpen || !navRef.current) return;
-
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Node;
-      const navElement = navRef.current;
-
-      if (!navElement) return;
-
-      // Kiểm tra click có nằm trong nav hoặc menu toggle button không
-      const isClickInNav = navElement.contains(target);
-      const isClickInMenuToggle = (target as Element).closest(
-        '[aria-label="Toggle navigation menu"]'
-      );
-
-      // Nếu click ngoài nav và không phải menu toggle button, đóng menu
-      if (!isClickInNav && !isClickInMenuToggle) {
-        setMenuIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [menuIsOpen, setMenuIsOpen]);
+  }, [menuIsOpen, activeCategory, setMenuIsOpen, setActiveCategory]);
 
   return (
     <nav
