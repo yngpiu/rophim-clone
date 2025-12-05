@@ -7,11 +7,11 @@
   left: 6px;
   z-index: 100;
   border-radius: 12px;
-  background-color: #3b4987;
+  background-color: var(--nav-menu-background);
   padding: 16px;
   width: calc(100% - 12px);
   max-width: 328px;
-  color: white;
+  color: var(--nav-menu-foreground);
 
   &--opened {
     display: block;
@@ -42,7 +42,7 @@
     gap: 6px;
     transition: all 0.3s ease;
     border-radius: 24px;
-    background-color: #fff;
+    background-color: white;
     padding: 8px 16px;
     height: 40px;
     color: black;
@@ -75,7 +75,7 @@
     display: block;
     cursor: pointer;
     padding: 8px 0;
-    color: white;
+    color: var(--nav-menu-foreground);
     font-weight: 500;
     font-size: 13px;
     user-select: none;
@@ -133,7 +133,7 @@
 
     &:hover {
       background-color: color-opacity(#fff, 0.05);
-      color: var(--primary-text);
+      color: var(--primary-foreground);
     }
   }
 }

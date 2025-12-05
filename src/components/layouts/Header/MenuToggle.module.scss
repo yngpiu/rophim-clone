@@ -25,13 +25,13 @@
         transform 0.3s ease,
         opacity 0.3s ease,
         background-color 0.3s ease;
-      background-color: white;
+      background-color: var(--foreground);
       width: 100%;
       height: 2px;
     }
 
     &--active &-line {
-      background-color: #ff6c5d;
+      background-color: var(--danger);
 
       &:nth-child(1) {
         transform: translateY(6px) rotate(45deg);
