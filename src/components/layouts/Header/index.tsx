@@ -1,9 +1,9 @@
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 
-import Navigation from '@/components/Navigation';
-import LogoLink from '@/components/layouts/Header/LogoLink';
+import LogoLink from '@/components/LogoLink';
 import MenuToggle from '@/components/layouts/Header/MenuToggle';
+import Navigation from '@/components/layouts/Header/Navigation';
 import SearchBar from '@/components/layouts/Header/SearchBar';
 import { useMenuContext } from '@/hooks/contexts/useMenuContext';
 import { useSearchModalContext } from '@/hooks/contexts/useSearchModalContext';
