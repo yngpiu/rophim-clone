@@ -7,13 +7,16 @@
   left: 0;
   align-items: center;
   gap: 12px;
-  transition: background-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
   background-color: transparent;
   padding: 12px 6px;
   width: 100%;
 
   &--fixed {
-    background-color: var(--bg-color);
+    background-color: var(--secondary-background);
+    color: var(--secondary-foreground);
   }
 
   @include breakpoint(xl) {
