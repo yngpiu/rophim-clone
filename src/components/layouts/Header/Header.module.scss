@@ -10,13 +10,15 @@
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
-  background-color: transparent;
+  background-color: var(--layout-background);
   padding: 12px 6px;
   width: 100%;
-
+  color: var(--layout-foreground);
+  @include breakpoint(md) {
+    background-color: transparent;
+  }
   &--fixed {
     background-color: var(--layout-background);
-    color: var(--layout-foreground);
   }
 
   @include breakpoint(xl) {

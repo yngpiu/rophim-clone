@@ -1,0 +1,8 @@
+@use '@/assets/styles/abstracts' as *;
+
+.container {
+  padding-top: 64px;
+  @include breakpoint(md) {
+    padding-top: 0px;
+  }
+}

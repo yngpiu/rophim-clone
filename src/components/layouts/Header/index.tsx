@@ -5,8 +5,8 @@ import Navigation from '@/components/Navigation';
 import LogoLink from '@/components/layouts/Header/LogoLink';
 import MenuToggle from '@/components/layouts/Header/MenuToggle';
 import SearchBar from '@/components/layouts/Header/SearchBar';
-import { useMenuContext } from '@/hooks/useMenuContext';
-import { useSearchModalContext } from '@/hooks/useSearchModalContext';
+import { useMenuContext } from '@/hooks/contexts/useMenuContext';
+import { useSearchModalContext } from '@/hooks/contexts/useSearchModalContext';
 
 import styles from './Header.module.scss';
 

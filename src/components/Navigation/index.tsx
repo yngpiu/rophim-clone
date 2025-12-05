@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { categoryList } from '@/data/navigation';
-import { useMenuContext } from '@/hooks/useMenuContext';
+import { useMenuContext } from '@/hooks/contexts/useMenuContext';
 
 import styles from './Navigation.module.scss';
 
