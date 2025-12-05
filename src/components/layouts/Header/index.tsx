@@ -37,8 +37,8 @@ const Header = () => {
         <MenuToggle isOpen={menuIsOpen} onToggle={toggleMenu} />
         <LogoLink />
       </div>
-      <Navigation searchModalIsOpen={searchModalIsOpen} />
       <SearchBar isOpen={searchModalIsOpen} isFixed={isScrolled} onToggle={toggleSearchModal} />
+      <Navigation searchModalIsOpen={searchModalIsOpen} />
     </header>
   );
 };
