@@ -99,7 +99,6 @@ export interface ReleaseDates {
 export interface ContentRatingResult {
   iso_3166_1: string;
   rating: string;
-  descriptor: string[];
 }
 
 export interface ContentRatings {
@@ -235,3 +234,20 @@ export interface TvDetailWithExtras extends TvShowDetail {
   content_ratings?: ContentRatings;
   images?: Images;
 }
+
+/**
+ * ======================
+ * ENRICHED TYPES (Trending + Detail)
+ * ======================
+ */
+
+export interface TrendingMovieWithDetail extends TrendingMovie {
+  detailData?: MovieDetailWithExtras;
+}
+
+export interface TrendingTvShowWithDetail extends TrendingTvShow {
+  detailData?: TvDetailWithExtras;
+}
+
+// ✅ Union type cho slider
+export type TrendingItemWithDetail = TrendingMovieWithDetail | TrendingTvShowWithDetail;

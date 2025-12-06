@@ -2,9 +2,12 @@ import classNames from 'classnames/bind';
 
 import apiConfig from '@/api/config/apiConfig';
 import Badge from '@/components/Badge';
-import useFetchMediaDetail from '@/hooks/useFetchMediaDetail';
 import LogoImage from '@/pages/HomePage/Hero/LogoImage';
-import type { MovieDetailWithExtras, TrendingItem, TvDetailWithExtras } from '@/types/tmdb.types';
+import type {
+  MovieDetailWithExtras,
+  TrendingItemWithDetail,
+  TvDetailWithExtras,
+} from '@/types/tmdb.types';
 import { convertSecondsToFilmDuration } from '@/utils/format';
 
 import styles from './Slider.module.scss';
@@ -12,36 +15,43 @@ import styles from './Slider.module.scss';
 const cx = classNames.bind(styles);
 
 type SliderContentProps = {
-  item: TrendingItem;
+  item: TrendingItemWithDetail;
 };
 
 const SliderContent = ({ item }: SliderContentProps) => {
-  const { data, loading, error } = useFetchMediaDetail({
-    mediaType: item.media_type,
-    mediaId: item.id,
-  });
+  const data = item.detailData;
+  console.log(data);
 
-  if (loading) return <p>Đang tải...</p>;
-  if (error) return <p>Lỗi: {error}</p>;
-  if (!data) return null;
+  // Fallback nếu không có detail
+  if (!data) {
+    return (
+      <div className={cx('slider__container')}>
+        <img
+          src={apiConfig.backdropSizes.original(item.backdrop_path)}
+          alt={item.media_type === 'movie' ? item.title : item.name}
+          className={cx('slider_image')}
+        />
+      </div>
+    );
+  }
 
   const isMovie = item.media_type === 'movie';
 
-  // ✅ Title từ data
+  // Title
   const title = isMovie ? (data as MovieDetailWithExtras).title : (data as TvDetailWithExtras).name;
 
-  // ✅ Original title từ data
+  // Original title
   const originalTitle = isMovie
     ? (data as MovieDetailWithExtras).original_title
     : (data as TvDetailWithExtras).original_name;
 
-  // ✅ Release year từ data
+  // Release year
   const releaseDate = isMovie
     ? (data as MovieDetailWithExtras).release_date
     : (data as TvDetailWithExtras).first_air_date;
   const releaseYear = releaseDate?.split('-')[0] || '';
 
-  // ✅ Runtime từ data
+  // Runtime
   let runtime = '';
   if (isMovie && 'runtime' in data) {
     const movieData = data as MovieDetailWithExtras;
@@ -52,6 +62,7 @@ const SliderContent = ({ item }: SliderContentProps) => {
     runtime = avgRuntime ? `${avgRuntime}ph/tập` : '';
   }
 
+  // Logo
   const logos = data.images?.logos || [];
   const logoPath =
     logos.find(logo => logo.iso_639_1 === 'en')?.file_path ||
@@ -59,6 +70,7 @@ const SliderContent = ({ item }: SliderContentProps) => {
     logos[0]?.file_path ||
     null;
 
+  // Certification
   let certification = '';
   if (isMovie && 'release_dates' in data) {
     const usRelease = data.release_dates?.results.find(r => r.iso_3166_1 === 'US');

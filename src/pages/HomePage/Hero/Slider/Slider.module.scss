@@ -1,5 +1,169 @@
 .slider {
-  &__logo {
-    display: none;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden; // ✅ Quan trọng!
+}
+
+.slider__container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slider_image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slider__content {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 100%);
+  padding: 4rem 2rem 2rem;
+}
+
+// ✅ FIX: Ẩn slides không active
+:global {
+  .swiper {
+    width: 100%;
+    height: 100%;
   }
+
+  .swiper-wrapper {
+    height: 100%;
+  }
+
+  .swiper-slide {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  // ✅ Chỉ hiện slide active, ẩn hết các slide khác
+  .swiper-slide:not(.swiper-slide-active) {
+    visibility: hidden !important; // ← Thêm để chắc chắn
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .swiper-slide-active {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  // ✅ Với effect fade
+  .swiper-fade .swiper-slide {
+    pointer-events: none;
+  }
+
+  .swiper-fade .swiper-slide-active {
+    pointer-events: auto;
+  }
+}
+
+// Loading state
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+  height: 100vh;
+  color: #fff;
+}
+
+// Custom pagination
+.custom-pagination {
+  display: flex;
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.thumbnail {
+  transition: all 0.3s;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  background: none;
+  padding: 0;
+  width: 100px;
+  height: 60px;
+  overflow: hidden;
+
+  &.active {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    border-color: #fff;
+  }
+
+  &:hover:not(.active) {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// Badges
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+// Overview
+.overview {
+  display: -webkit-box;
+  margin: 1rem 0;
+  max-width: 600px;
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Genres
+.genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.genre {
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.25rem 0.75rem;
+  color: #fff;
+  font-size: 0.875rem;
+}
+
+// Title
+.slider__title {
+  margin: 0 0 0.5rem 0;
+  color: #fff;
+  font-weight: bold;
+  font-size: 2.5rem;
+}
+
+.slider__original-title {
+  margin: 0 0 1rem 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.25rem;
 }
