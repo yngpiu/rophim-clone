@@ -5,7 +5,7 @@
   position: absolute;
   top: 68px;
   left: 6px;
-  z-index: 100;
+  z-index: 1000;
   border-radius: 12px;
   background-color: var(--nav-menu-background);
   padding: 16px;
@@ -95,7 +95,7 @@
     position: absolute;
     top: 100%;
     left: 0;
-    z-index: 15;
+    z-index: 1001;
     border-radius: 8px;
     background-color: color-opacity(#000, 0.8);
     padding: 12px;

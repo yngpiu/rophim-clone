@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import axiosClient from '@/api/config/axiosClient';
-import type { ApiParams } from '@/types/tmdb';
+import type { ApiParams } from '@/types/tmdb.types';
 
 interface UseFetchResult<T> {
   data: T | null;
@@ -24,7 +24,7 @@ const useFetch = <T,>(url: string, initialParams: ApiParams = {}): UseFetchResul
 
     try {
       const response = await axiosClient.get<T>(url, { params });
-      setData(response.data);
+      setData(response as T);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Có lỗi xảy ra';
       setError(errorMessage);
