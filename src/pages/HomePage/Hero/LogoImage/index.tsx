@@ -9,11 +9,13 @@ const cx = classNames.bind(styles);
 interface LogoImageProps {
   alt: string;
   url: string;
+  className?: string;
 }
 
-const LogoImage: React.FC<LogoImageProps> = ({ url, alt }) => {
-  console.log(url);
-  return <img src={apiConfig.logoSizes.w500(url)} alt={alt} className={cx('logo-image')} />;
+const LogoImage: React.FC<LogoImageProps> = ({ url, alt, className }) => {
+  return (
+    <img src={apiConfig.logoSizes.w500(url)} alt={alt} className={cx('film-logo', className)} />
+  );
 };
 
 export default LogoImage;

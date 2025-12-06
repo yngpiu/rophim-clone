@@ -52,7 +52,6 @@ const Slider = ({ trendingData }: SliderProps) => {
 
             // ✅ Type assertion để TypeScript hiểu đúng
             if (item.media_type === 'movie') {
-              console.log(detailData);
               return {
                 ...item,
                 detailData: detailData as unknown as MovieDetailWithExtras,
@@ -95,8 +94,6 @@ const Slider = ({ trendingData }: SliderProps) => {
       </div>
     );
   }
-  console.log(enrichedData);
-
   return (
     <div className={cx('slider')}>
       <Swiper
@@ -117,7 +114,7 @@ const Slider = ({ trendingData }: SliderProps) => {
         ))}
       </Swiper>
 
-      <div className={cx('custom-pagination')}>
+      <div className={cx('slider__navigation')}>
         {enrichedData.map((item, index) => {
           return (
             <button

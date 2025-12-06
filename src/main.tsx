@@ -6,7 +6,7 @@ import '@/assets/styles/main.scss';
 import router from '@/routes/root';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>
+  // <StrictMode>
+  <RouterProvider router={router} />
+  // </StrictMode>
 );

@@ -1,6 +1,20 @@
+@use '@/assets/styles/abstracts' as *;
+
 .badge {
   border: 1px solid #fff;
+  border-radius: 0.6rem;
   background-color: transparent;
-  padding: 4px 8px;
-  font-size: 12px;
+  padding: 0.2rem 0.4rem;
+  font-weight: 500;
+  font-size: 1rem;
+
+  @include breakpoint(sm) {
+    padding: 0.3rem 0.6rem;
+    font-size: 1.1rem;
+  }
+
+  @include breakpoint(md) {
+    padding: 0.4rem 0.8rem;
+    font-size: 1.2rem;
+  }
 }
